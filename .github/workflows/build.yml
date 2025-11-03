@@ -23,9 +23,7 @@ jobs:
         distribution: 'temurin'
         
     - name: Grant execute permission for gradlew
-      run: |
-        cd android-client
-        chmod +x gradlew
+      run: chmod +x android-client/gradlew
         
     - name: Build Android Client APK
       run: |
@@ -53,9 +51,7 @@ jobs:
         distribution: 'temurin'
         
     - name: Grant execute permission for gradlew
-      run: |
-        cd android-tv
-        chmod +x gradlew
+      run: chmod +x android-tv/gradlew
         
     - name: Build Android TV APK
       run: |

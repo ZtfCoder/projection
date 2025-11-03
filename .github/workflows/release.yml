@@ -21,16 +21,19 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
         
+    - name: Grant execute permission for gradlew
+      run: |
+        chmod +x android-client/gradlew
+        chmod +x android-tv/gradlew
+        
     - name: Build Android Client
       run: |
         cd android-client
-        chmod +x gradlew
         ./gradlew assembleDebug
         
     - name: Build Android TV
       run: |
         cd android-tv
-        chmod +x gradlew
         ./gradlew assembleDebug
         
     - name: Rename APKs
