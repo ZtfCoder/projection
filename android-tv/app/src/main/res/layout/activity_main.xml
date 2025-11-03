@@ -27,11 +27,12 @@
     
     <ImageView
         android:id="@+id/qrCodeImage"
-        android:layout_width="400dp"
-        android:layout_height="400dp"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
         android:background="#FFFFFF"
         android:padding="16dp"
-        android:layout_marginBottom="32dp" />
+        android:layout_marginBottom="32dp"
+        android:scaleType="fitCenter" />
     
     <TextView
         android:id="@+id/ipText"
