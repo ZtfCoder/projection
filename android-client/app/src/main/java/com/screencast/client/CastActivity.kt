@@ -69,8 +69,23 @@ class CastActivity : AppCompatActivity() {
         intent.putExtra("data", data)
         intent.putExtra("server_ip", serverIp)
         intent.putExtra("server_port", serverPort)
+
+        // 读取码率和帧率设置
+        val prefs = getSharedPreferences("settings", MODE_PRIVATE)
+        val bitrateIndex = prefs.getInt("bitrate_index", 0)
+        val framerateIndex = prefs.getInt("framerate_index", 2)
+        val bitrateArray = resources.getStringArray(R.array.bitrate_options)
+        val framerateArray = resources.getStringArray(R.array.framerate_options)
+
+        // 码率处理
+        val bitrate = if (bitrateArray[bitrateIndex] == "无限制") -1 else bitrateArray[bitrateIndex].toInt() * 1000000
+        val framerate = framerateArray[framerateIndex].toInt()
+
+        intent.putExtra("bitrate", bitrate)
+        intent.putExtra("framerate", framerate)
+
         startForegroundService(intent)
-        
+
         isCasting = true
         statusText.text = "投屏中... ($serverIp:$serverPort)"
         updateButtonStates()

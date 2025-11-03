@@ -39,8 +39,8 @@ class ScreenCastService : Service() {
     
     private var screenWidth = 1280
     private var screenHeight = 720
-    private val bitRate = 2000000  // 2 Mbps
-    private val frameRate = 30
+    private var bitRate: Int? = 2000000  // 可为 null 表示无限制
+    private var frameRate: Int = 30
     
     companion object {
         private const val NOTIFICATION_ID = 1
@@ -59,9 +59,14 @@ class ScreenCastService : Service() {
         val data = intent.getParcelableExtra<Intent>("data") ?: return START_NOT_STICKY
         val serverIp = intent.getStringExtra("server_ip") ?: return START_NOT_STICKY
         serverPort = intent.getIntExtra("server_port", 0)
-        
+
+        // 读取码率和帧率参数
+        val bitrateValue = intent.getIntExtra("bitrate", -1)
+        bitRate = if (bitrateValue > 0) bitrateValue else null
+        frameRate = intent.getIntExtra("framerate", 30)
+
         startForeground(NOTIFICATION_ID, createNotification())
-        
+
         serviceScope.launch {
             try {
                 serverAddress = InetAddress.getByName(serverIp)
@@ -72,7 +77,7 @@ class ScreenCastService : Service() {
                 stopSelf()
             }
         }
-        
+
         return START_STICKY
     }
     
@@ -139,11 +144,13 @@ class ScreenCastService : Service() {
     
     private fun setupMediaCodec() {
         val format = MediaFormat.createVideoFormat(MediaFormat.MIMETYPE_VIDEO_AVC, screenWidth, screenHeight)
-        format.setInteger(MediaFormat.KEY_BIT_RATE, bitRate)
+        if (bitRate != null) {
+            format.setInteger(MediaFormat.KEY_BIT_RATE, bitRate!!)
+        }
         format.setInteger(MediaFormat.KEY_FRAME_RATE, frameRate)
         format.setInteger(MediaFormat.KEY_COLOR_FORMAT, MediaCodecInfo.CodecCapabilities.COLOR_FormatSurface)
         format.setInteger(MediaFormat.KEY_I_FRAME_INTERVAL, 1)
-        
+
         mediaCodec = MediaCodec.createEncoderByType(MediaFormat.MIMETYPE_VIDEO_AVC)
         mediaCodec?.configure(format, null, null, MediaCodec.CONFIGURE_FLAG_ENCODE)
         mediaCodec?.start()

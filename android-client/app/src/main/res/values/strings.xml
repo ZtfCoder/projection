@@ -8,4 +8,18 @@
     <string name="connected">已连接</string>
     <string name="disconnected">已断开</string>
     <string name="casting">投屏中...</string>
+
+    <string-array name="bitrate_options">
+        <item>2</item>
+        <item>4</item>
+        <item>8</item>
+        <item>无限制</item>
+    </string-array>
+    <string-array name="framerate_options">
+        <item>15</item>
+        <item>24</item>
+        <item>30</item>
+        <item>60</item>
+        <item>120</item>
+    </string-array>
 </resources>
