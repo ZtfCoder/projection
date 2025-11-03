@@ -43,7 +43,7 @@ class VideoReceiverService : Service() {
             // 启动TCP服务器等待连接
             serverSocket = ServerSocket(port)
             
-            while (isActive) {
+            while (coroutineContext.isActive) {
                 // 等待客户端连接
                 clientSocket = serverSocket?.accept()
                 
@@ -83,7 +83,7 @@ class VideoReceiverService : Service() {
                 val buffer = ByteArray(65536)
                 val packet = DatagramPacket(buffer, buffer.size)
                 
-                while (isReceiving && isActive) {
+                while (isReceiving && coroutineContext.isActive) {
                     udpSocket?.receive(packet)
                     
                     if (packet.length > 0) {
