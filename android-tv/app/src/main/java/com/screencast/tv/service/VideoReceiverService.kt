@@ -9,6 +9,7 @@ import android.view.Surface
 import com.screencast.tv.DisplayActivity
 import com.screencast.tv.VideoDisplayManager
 import kotlinx.coroutines.*
+import kotlinx.coroutines.coroutineScope
 import java.io.DataInputStream
 import java.net.DatagramPacket
 import java.net.DatagramSocket
@@ -38,12 +39,12 @@ class VideoReceiverService : Service() {
         return START_STICKY
     }
     
-    private suspend fun startServer(port: Int) {
+    private suspend fun startServer(port: Int) = coroutineScope {
         try {
             // 启动TCP服务器等待连接
             serverSocket = ServerSocket(port)
             
-            while (coroutineContext.isActive) {
+            while (isActive) {
                 // 等待客户端连接
                 clientSocket = serverSocket?.accept()
                 
@@ -83,7 +84,7 @@ class VideoReceiverService : Service() {
                 val buffer = ByteArray(65536)
                 val packet = DatagramPacket(buffer, buffer.size)
                 
-                while (isReceiving && coroutineContext.isActive) {
+                while (isReceiving && isActive) {
                     udpSocket?.receive(packet)
                     
                     if (packet.length > 0) {
