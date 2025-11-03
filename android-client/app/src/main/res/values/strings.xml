@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">投屏客户端</string>
+    <string name="scan_qr_code">扫描二维码连接</string>
+    <string name="start_casting">开始投屏</string>
+    <string name="stop_casting">停止投屏</string>
+    <string name="connecting">正在连接...</string>
+    <string name="connected">已连接</string>
+    <string name="disconnected">已断开</string>
+    <string name="casting">投屏中...</string>
+</resources>

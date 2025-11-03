@@ -1,0 +1,39 @@
+# Gradle 相关
+.gradle/
+**/build/
+!src/**/build/
+gradle-app.setting
+!gradle-wrapper.jar
+.gradletasknamecache
+
+# Android Studio
+*.iml
+.idea/
+.DS_Store
+/local.properties
+/.idea/caches
+/.idea/libraries
+/.idea/modules.xml
+/.idea/workspace.xml
+/.idea/navEditor.xml
+/.idea/assetWizardSettings.xml
+.externalNativeBuild
+.cxx
+
+# Build outputs
+**/outputs/
+**/intermediates/
+
+# Keystore files
+*.jks
+*.keystore
+
+# Log files
+*.log
+
+# OS specific
+.DS_Store
+Thumbs.db
+
+# Release folder
+release/
